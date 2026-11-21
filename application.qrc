@@ -1,0 +1,8 @@
+<RCC>
+    <qresource>
+        <file>ui/sudoku.qml</file>
+        <file>ui/build-stamp.txt</file>
+        <file>ui/digit-model.js</file>
+        <file>ui/digit-recognizer.js</file>
+    </qresource>
+</RCC>

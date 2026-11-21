@@ -1,0 +1,37 @@
+name: Release
+
+# Push a tag like v0.1.0 (it must match the VERSION file) to build and publish a GitHub release.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tag must match VERSION
+        run: |
+          test "${GITHUB_REF_NAME}" = "v$(tr -d '[:space:]' < VERSION)" || { echo "tag ${GITHUB_REF_NAME} does not match VERSION"; exit 1; }
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node tools/ci-check.js
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install PySide6==6.12.0
+      - run: rustup target add aarch64-unknown-linux-musl
+      - run: bash tools/build.sh
+      - run: bash tools/package.sh
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" dist/release/* \
+            --title "Sudoku ${GITHUB_REF_NAME}" \
+            --generate-notes \
+            --notes "Install with Vellum (\`vellum add sudoku\`, once listed) or unzip the archive into \`/home/root/xovi/exthome/appload/\`. See the README. Tested on a Paper Pro, firmware 3.29.1."

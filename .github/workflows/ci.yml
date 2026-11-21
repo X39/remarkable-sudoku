@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  recognizer:
+    name: Recognizer sanity check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node tools/ci-check.js
+
+  velbuild:
+    name: Validate VELBUILD
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run the Vellum repository's validator (pinned commit)
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/vellum-dev/vellum/51dcbfe1a6acfc9c47946f9b259e511c7f8aa5c0/scripts/validate-velbuild.sh -o "$RUNNER_TEMP/validate-velbuild.sh"
+          sh "$RUNNER_TEMP/validate-velbuild.sh" vellum/VELBUILD
+
+  build:
+    name: Build app (aarch64)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install PySide6==6.12.0
+      - run: rustup target add aarch64-unknown-linux-musl
+      - uses: actions/cache@v4
+        with:
+          path: backend/target
+          key: backend-${{ hashFiles('backend/Cargo.lock') }}
+      - run: bash tools/build.sh
+      - run: bash tools/package.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sudoku-appload
+          path: dist/release/

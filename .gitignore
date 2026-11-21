@@ -1,0 +1,7 @@
+dist/
+build/
+ui/build-stamp.txt
+backend/target/
+tools/.venv/
+__pycache__/
+*.pyc

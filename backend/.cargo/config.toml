@@ -1,0 +1,8 @@
+# Cross-compile for the reMarkable Paper Pro (aarch64 Linux, static musl).
+# rust-lld + self-contained linking: no external cross compiler needed.
+[build]
+target = "aarch64-unknown-linux-musl"
+
+[target.aarch64-unknown-linux-musl]
+linker = "rust-lld"
+rustflags = ["-C", "link-self-contained=yes"]

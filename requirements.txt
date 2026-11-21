@@ -1,0 +1,5 @@
+# Only needed for training the digit model (tools/train_cnn.py) and building resources.rcc locally.
+PySide6==6.12.0
+numpy
+scikit-learn
+torch

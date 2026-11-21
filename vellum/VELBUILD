@@ -1,0 +1,33 @@
+# Vellum package for the Sudoku AppLoad app. To publish it, copy this directory to
+# packages/sudoku/ in https://github.com/vellum-dev/vellum and open a pull request
+# (see ../docs/VELLUM.md). Run tools/update-velbuild.sh <version> after each GitHub release.
+maintainer="X39 <1886428+X39@users.noreply.github.com>"
+pkgname=sudoku
+pkgver=0.1.0
+pkgrel=0
+upstream_author="X39"
+category="apps"
+pkgdesc="Sudoku with pen handwriting recognition for AppLoad"
+url="https://github.com/X39/remarkable-sudoku"
+arch="aarch64"
+license="MIT"
+# launcher is provided by appload. Developed and tested only on a Paper Pro with firmware 3.29.1.
+depends="launcher !rmppm remarkable-os>=3.29 remarkable-os<3.30"
+readmeurl="https://raw.githubusercontent.com/X39/remarkable-sudoku/v$pkgver/README.md"
+source="
+sudoku-appload-$pkgver-aarch64.tar.gz::https://github.com/X39/remarkable-sudoku/releases/download/v$pkgver/sudoku-appload-$pkgver-aarch64.tar.gz
+"
+options="!check !fhs !strip !tracedeps"
+
+package() {
+	local dest="$pkgdir"/home/root/xovi/exthome/appload/sudoku
+	install -Dm644 "$srcdir"/sudoku/manifest.json "$dest"/manifest.json
+	install -Dm644 "$srcdir"/sudoku/icon.png "$dest"/icon.png
+	install -Dm644 "$srcdir"/sudoku/resources.rcc "$dest"/resources.rcc
+	install -Dm755 "$srcdir"/sudoku/backend/entry "$dest"/backend/entry
+}
+
+# Filled in by tools/update-velbuild.sh once the release archive exists.
+sha512sums="
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000  sudoku-appload-0.1.0-aarch64.tar.gz
+"
