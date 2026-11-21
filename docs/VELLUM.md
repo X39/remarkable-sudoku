@@ -26,9 +26,9 @@ ready `vellum/VELBUILD` that installs the release archive into AppLoad's app dir
 ## Steps
 
 1. Make sure `X39/remarkable-sudoku` is on GitHub and the `maintainer` in `vellum/VELBUILD` is what you want listed.
-2. Tag a release (`git tag v0.1.0 && git push origin v0.1.0`); the release workflow publishes
-   `sudoku-appload-0.1.0-aarch64.tar.gz`.
-3. `sh tools/update-velbuild.sh 0.1.0` writes the real `sha512sums` (and `pkgver`) into `vellum/VELBUILD`. Commit that.
+2. Tag a release (`git tag v1.0.0 && git push origin v1.0.0`); the release workflow publishes
+   `sudoku-appload-1.0.0-aarch64.tar.gz`.
+3. `sh tools/update-velbuild.sh 1.0.0` writes the real `sha512sums` (and `pkgver`) into `vellum/VELBUILD`. Commit that.
 4. Fork vellum-dev/vellum, copy `vellum/VELBUILD` to `packages/sudoku/VELBUILD`, test it with `build-package.sh`, and open the PR yourself.
 
 ## Decisions to confirm in the VELBUILD

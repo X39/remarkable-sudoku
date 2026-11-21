@@ -3,7 +3,7 @@
 # (see ../docs/VELLUM.md). Run tools/update-velbuild.sh <version> after each GitHub release.
 maintainer="X39 <1886428+X39@users.noreply.github.com>"
 pkgname=sudoku
-pkgver=0.1.0
+pkgver=1.0.0
 pkgrel=0
 upstream_author="X39"
 category="apps"
@@ -29,5 +29,5 @@ package() {
 
 # Filled in by tools/update-velbuild.sh once the release archive exists.
 sha512sums="
-182847992ea29c507a9da70fa4bb45424fe2562aad9343bda71a991ce841d3726ee77c2ec3399be5ccf4a7b4e6c976d6a6dd78e0f2a208475b7f411d72af5a80  sudoku-appload-0.1.0-aarch64.tar.gz
+152c330f08a80e23a8f21195de03070b98c45633c543bd4113aedb8568ad9d28a022f4b6fe3d7391f4de5b11c28b334f7b5a47b923bd8c37d7110882cd1e093d  sudoku-appload-1.0.0-aarch64.tar.gz
 "
